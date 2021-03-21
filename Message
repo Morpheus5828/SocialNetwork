@@ -1,0 +1,69 @@
+/* Message.java Class is used to save liker list, author, title and content messages.
+ * It takes in memory these messages in list : 'likers'. Her type is an ArrayList
+ * (that's why we have to import java.util.List and java.util.ArrayList).
+ * Properties are: 'author', 'title', 'content' and 'list', their third once are String.
+ * Then, we create the 'Message Constructor', her role is to create a Message Body of the object.
+ * 'Likers' list is linked with People.java Class, because it contains a People List who liked the user.
+ * Finally we make methods, who do some actions:
+ * - getTitle : return title message.
+ * - setTitle : user enter himself a title that he chose.
+ * - getContents : return content message
+ * - receiveLiker : user enter a name who receive a like from an other People and put into Likers list.
+ */
+import java.util.ArrayList;
+import java.util.List;
+
+public class Message {
+    private String author;
+    private String title;
+    private String content;
+    private List<People> likers = new ArrayList<>();
+
+    public Message(String author) {
+        this.author = author;
+        this.title = "";
+        this.content = "";
+        this.likers = new ArrayList<People>();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String newContent) {
+        this.content = newContent;
+    }
+
+    public void receiveLiker(People likingPeople) {
+        this.likers.add(likingPeople);
+    }
+
+    private String displayLiker() {
+        String result = "";
+        for (People liker : this.likers) {
+            result += liker.getName() + ", ";
+        }
+        return result;
+    }
+
+    public String display() {
+        String result = "";
+        result += this.getTitle() + '\n';
+        result += "par : " + this.author + '\n';
+        result += this.getContent() + '\n';
+        if(likers.size() != 0){
+            String value = this.displayLiker();
+            result += "Aimé par : " + value.substring(0, value.length() - 2 ) + '\n';
+        }
+        result += "-----" + '\n';
+        return result;
+    }
+}
