@@ -1,0 +1,75 @@
+/* People.java Class is used to organize the social network between users.
+ * It can create people represented by object, (defined by name).
+ * People can communicate each others with tape sentences, follow other users et like their posts.
+ * The setting code:
+ * At the beginning, we have to make properties: 'name', 'messages' and 'followers',
+ * the first one defined name of the person, the other both, are lists, 'messages' contains sentences,
+ * and 'followers' contains, people who follow the user.
+ * To use list in JAVA, we import two modules: java.util.Arraylist and java.util.List.
+ * Then, we create the 'People Constructor' her role is to create a People Body of the object.
+ * Finally we make methods, who do some actions:
+ * - getName : return a name
+ * - Post : add people message into the 'messages' list.
+ * - lastPost : return the last messages of a user.
+ *
+*/
+import java.util.ArrayList;
+import java.util.List;
+
+public class People {
+    private String name;
+    private List<Message> messages;
+    private List<People> followers;
+
+    public People(String name) {
+        this.name = name;
+        this.messages = new ArrayList<>();
+        this.followers = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void follow(People people) {
+        people.addFollowers(this);
+    }
+
+    public void like(Message contenu) {
+        contenu.receiveLiker(this);
+    }
+
+    public void post(String title ,String sentences) {
+        Message text = new Message(this.name);
+        text.setTitle(title);
+        text.setContent(sentences);
+        receive(text);
+        broadcast(text);
+    }
+
+    public Message lastPost() {
+        return messages.get(messages.size() - 1);
+    }
+
+    private void addFollowers(People follower) {
+        this.followers.add(follower);
+    }
+
+    public void receive(Message message) {
+        this.messages.add(message);
+    }
+
+    private void broadcast(Message message) {
+        for (People follower : this.followers) {
+            follower.receive(message);
+        }
+    }
+
+    public void display() {
+        String result = "Page de " + this.getName() + "." + '\n';
+        for(Message value : this.messages) {
+            result += '\n' + value.display();
+        }
+        System.out.println(result);
+    }
+}
