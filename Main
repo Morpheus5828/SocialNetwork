@@ -1,0 +1,28 @@
+/* The goal of this project is to create little social network.
+ * Inside it, people can post message, allow them, et follow people messages.
+ * To realise it, we have to create two Class:
+ * - People.java (= go to People.java file to see descriptions codes)
+ * - Messages.java (= same thing for Messages.java)
+ * The Main.java Class is gonna display messages of different user, liker, followers.
+ */
+
+public class Main {
+    public static void main(String[] args) {
+        People alice = new People("Alice");
+        People bob = new People("Bob");
+        People carol = new People("Carol");
+
+        alice.post("My first message", "Hi everybody !");
+        bob.follow(alice);
+        carol.like(alice.lastPost());
+        alice.post("My second message", "I love you so much.");
+        bob.like(alice.lastPost());
+        carol.like(alice.lastPost());
+        bob.post("test test", "test");
+        alice.post("About Bob", "He is crazy.");
+        carol.like(alice.lastPost());
+        bob.post("Alice Answer", "Do you have a problem ?");
+
+        bob.display();
+    }
+}
